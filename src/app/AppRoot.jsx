@@ -50,7 +50,7 @@ export default function AppRoot() {
           <Route path="sessions/:id/qr" element={<SessionQRPage />} />
           <Route path="ratings" element={<RatingsPage />} />
           <Route path="users" element={<UsersPage />} />
-        </Reute>
+        </Route>
 
         <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
