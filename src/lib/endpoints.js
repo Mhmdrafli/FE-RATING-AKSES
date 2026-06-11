@@ -1,0 +1,23 @@
+const E = {
+  SESSION_BY_TOKEN: (t) => `/api/session/${t}`,
+  SUBMIT_RATING: (t) => `/api/ratings/${t}`,
+  LOGIN: '/api/auth/login',
+  LOGOUT: '/api/auth/logout',
+  ME: '/api/auth/me',
+  BRANCHES: '/api/admin/branches',
+  BRANCH: (id) => `/api/admin/branches/${id}`,
+  TEACHERS: '/api/admin/teachers',
+  TEACHER: (id) => `/api/admin/teachers/${id}`,
+  ROOMS: '/api/admin/rooms',
+  ROOM: (id) => `/api/admin/rooms/${id}`,
+  CLASSES: '/api/admin/classes',
+  CLASS: (id) => `/api/admin/classes/${id}`,
+  SESSIONS: '/api/admin/sessions',
+  SESSION: (id) => `/api/admin/sessions/${id}`,
+  RATINGS: '/api/admin/ratings',
+  RATINGS_EXPORT: '/api/admin/ratings/export',
+  DASHBOARD: '/api/admin/dashboard',
+  USERS: '/api/admin/users',
+  USER: (id) => `/api/admin/users/${id}`,
+}
+export default E
