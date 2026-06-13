@@ -42,14 +42,14 @@ export default function AppRoot() {
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="branches" element={<BranchesPage />} />
+          <Route path="branches" element={<ProtectedRoute superOnly><BranchesPage /></ProtectedRoute>} />
           <Route path="teachers" element={<TeachersPage />} />
           <Route path="rooms" element={<RoomsPage />} />
           <Route path="classes" element={<ClassesPage />} />
           <Route path="sessions" element={<SessionsPage />} />
           <Route path="sessions/:id/qr" element={<SessionQRPage />} />
           <Route path="ratings" element={<RatingsPage />} />
-          <Route path="users" element={<UsersPage />} />
+          <Route path="users" element={<ProtectedRoute superOnly><UsersPage /></ProtectedRoute>} />
         </Route>
 
         <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />

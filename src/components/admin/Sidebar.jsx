@@ -1,23 +1,26 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, Building2, Users, DoorOpen, BookOpen, CalendarDays, BarChart2, UserCog, LogOut } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
+import { useRole } from '../../lib/roles'
 import api from '../../lib/api'
 import E from '../../lib/endpoints'
 
 const NAV = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/admin/branches', label: 'Cabang', icon: Building2 },
+  { to: '/admin/branches', label: 'Cabang', icon: Building2, superOnly: true },
   { to: '/admin/teachers', label: 'Guru', icon: Users },
   { to: '/admin/rooms', label: 'Ruangan', icon: DoorOpen },
   { to: '/admin/classes', label: 'Kelas', icon: BookOpen },
   { to: '/admin/sessions', label: 'Sesi Kelas', icon: CalendarDays },
   { to: '/admin/ratings', label: 'Laporan Rating', icon: BarChart2 },
-  { to: '/admin/users', label: 'Manajemen User', icon: UserCog },
+  { to: '/admin/users', label: 'Manajemen User', icon: UserCog, superOnly: true },
 ]
 
 export default function Sidebar({ open, onClose }) {
   const navigate = useNavigate()
   const { logout } = useAuthStore()
+  const { isSuperAdmin } = useRole()
+  const nav = NAV.filter((n) => !n.superOnly || isSuperAdmin)
   const handleLogout = async () => {
     try { await api.post(E.LOGOUT) } catch {}
     logout()
@@ -32,7 +35,7 @@ export default function Sidebar({ open, onClose }) {
           <div className="text-xs text-gray-400">the way become expert</div>
         </div>
         <nav className="px-3 py-4 flex-1 overflow-y-auto">
-          {NAV.map(({ to, label, icon: Icon }) => (
+          {nav.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}

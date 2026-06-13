@@ -10,18 +10,22 @@ import useToastStore from '../../store/toastStore'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import { Star, Download } from 'lucide-react'
 import { getErrorMessage } from '../../lib/errorHandler'
+import { useRole } from '../../lib/roles'
 
 const inputCls = 'w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#0076D0]'
 
 export default function RatingsPage() {
   const toast = useToastStore()
-  const [filters, setFilters] = useState({ branch_id: '', session_id: '', date_from: '', date_to: '' })
+  const { isAdminCabang, branch } = useRole()
+  const lockedBranch = isAdminCabang && branch ? String(branch.id) : ''
+  const [filters, setFilters] = useState({ branch_id: lockedBranch, session_id: '', date_from: '', date_to: '' })
   const [page, setPage] = useState(1)
   const [resp, setResp] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const { data: branchesRes } = useGet(E.BRANCHES, { per_page: 100 })
-  const { data: sessionsRes } = useGet(E.SESSIONS, { per_page: 100 })
+  const scope = isAdminCabang && branch ? { branch_id: branch.id } : {}
+  const { data: branchesRes } = useGet(isAdminCabang ? null : E.BRANCHES, { per_page: 100 })
+  const { data: sessionsRes } = useGet(E.SESSIONS, { per_page: 100, ...scope })
   const branches = branchesRes?.data?.data || branchesRes?.data || []
   const sessions = sessionsRes?.data?.data || sessionsRes?.data || []
 
@@ -39,7 +43,7 @@ export default function RatingsPage() {
   const totalPages = resp?.data?.last_page || 1
 
   const onFilter = (k, v) => { setFilters((p) => ({ ...p, [k]: v })); setPage(1) }
-  const reset = () => { setFilters({ branch_id: '', session_id: '', date_from: '', date_to: '' }); setPage(1) }
+  const reset = () => { setFilters({ branch_id: lockedBranch, session_id: '', date_from: '', date_to: '' }); setPage(1) }
 
   const exportCsv = async () => {
     try {
@@ -54,13 +58,15 @@ export default function RatingsPage() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-xl border border-gray-100 p-4 grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
-        <div>
-          <label className="block text-xs text-gray-500 mb-1">Cabang</label>
-          <select className={inputCls} value={filters.branch_id} onChange={(e) => onFilter('branch_id', e.target.value)}>
-            <option value="">Semua</option>
-            {branches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
-          </select>
-        </div>
+        {!isAdminCabang && (
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">Cabang</label>
+            <select className={inputCls} value={filters.branch_id} onChange={(e) => onFilter('branch_id', e.target.value)}>
+              <option value="">Semua</option>
+              {branches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+            </select>
+          </div>
+        )}
         <div>
           <label className="block text-xs text-gray-500 mb-1">Sesi</label>
           <select className={inputCls} value={filters.session_id} onChange={(e) => onFilter('session_id', e.target.value)}>

@@ -5,15 +5,18 @@ import E from '../../lib/endpoints'
 import Badge from '../../components/ui/Badge'
 import useToastStore from '../../store/toastStore'
 import { QrCode, Copy } from 'lucide-react'
+import { useRole } from '../../lib/roles'
 
 const STATUS = { active: { label: 'Aktif', color: 'green' }, completed: { label: 'Selesai', color: 'gray' }, cancelled: { label: 'Dibatalkan', color: 'red' } }
 
 export default function SessionsPage() {
   const navigate = useNavigate()
   const toast = useToastStore()
-  const { data: classesRes } = useGet(E.CLASSES, { per_page: 100 })
-  const { data: teachersRes } = useGet(E.TEACHERS, { per_page: 100 })
-  const { data: roomsRes } = useGet(E.ROOMS, { per_page: 100 })
+  const { isAdminCabang, branch } = useRole()
+  const scope = isAdminCabang && branch ? { branch_id: branch.id } : {}
+  const { data: classesRes } = useGet(E.CLASSES, { per_page: 100, ...scope })
+  const { data: teachersRes } = useGet(E.TEACHERS, { per_page: 100, ...scope })
+  const { data: roomsRes } = useGet(E.ROOMS, { per_page: 100, ...scope })
   const classes = classesRes?.data?.data || classesRes?.data || []
   const teachers = teachersRes?.data?.data || teachersRes?.data || []
   const rooms = roomsRes?.data?.data || roomsRes?.data || []
@@ -29,6 +32,7 @@ export default function SessionsPage() {
       title="Sesi"
       endpoint={E.SESSIONS}
       itemEndpoint={E.SESSION}
+      extraParams={scope}
       defaultValues={{ class_id: '', teacher_id: '', room_id: '', name: '', start_time: '', end_time: '', status: 'active' }}
       columns={[
         { key: 'no', label: 'No', render: (_, i) => i + 1 },
