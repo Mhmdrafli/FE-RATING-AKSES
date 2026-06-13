@@ -17,6 +17,8 @@ export default function CrudPage({
   title, endpoint, itemEndpoint, columns,
   defaultValues = {}, renderForm, extraActions, useFormData = false,
   buildPayload, // optional (formData) => payload
+  extraParams = {}, // appended to list query
+  injectPayload, // optional object merged into payload before submit
 }) {
   const toast = useToastStore()
   const [items, setItems] = useState([])
@@ -33,10 +35,11 @@ export default function CrudPage({
 
   const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm({ defaultValues })
 
+  const extraKey = JSON.stringify(extraParams)
   const fetchItems = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await api.get(endpoint, { params: { search, page } })
+      const res = await api.get(endpoint, { params: { search, page, ...extraParams } })
       const d = res.data?.data
       if (d?.data) { setItems(d.data); setTotalPages(d.last_page || 1) }
       else if (Array.isArray(d)) { setItems(d); setTotalPages(1) }
@@ -45,7 +48,8 @@ export default function CrudPage({
       toast.add(getErrorMessage(e), 'error')
       setItems([])
     } finally { setLoading(false) }
-  }, [endpoint, search, page])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endpoint, search, page, extraKey])
 
   useEffect(() => { fetchItems() }, [fetchItems])
 
@@ -61,7 +65,8 @@ export default function CrudPage({
   const onSubmit = async (formData) => {
     setSubmitting(true); setServerErrors({})
     try {
-      const payload = buildPayload ? buildPayload(formData, editItem) : formData
+      let payload = buildPayload ? buildPayload(formData, editItem) : formData
+      if (injectPayload) payload = { ...payload, ...injectPayload }
       let config = {}
       let body = payload
       if (useFormData) {
