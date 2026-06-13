@@ -2,8 +2,8 @@ import useToastStore from '../../store/toastStore'
 import { CheckCircle2, XCircle, Info, X } from 'lucide-react'
 
 const ICONS = { success: CheckCircle2, error: XCircle, info: Info }
-const BORDERS = { success: '#22C55E', error: '#EF4444', info: '#0076D0' }
-const COLORS = { success: 'text-green-500', error: 'text-red-500', info: 'text-blue-500' }
+const BORDERS = { success: '#0076D0', error: '#0076D0', info: '#0076D0' }
+const COLORS = { success: 'text-[#0076D0]', error: 'text-[#0076D0]', info: 'text-[#0076D0]' }
 
 export default function Toast() {
   const { toasts, remove } = useToastStore()
