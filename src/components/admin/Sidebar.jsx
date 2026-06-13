@@ -46,7 +46,9 @@ export default function Sidebar({ open, onClose }) {
                 }`
               }
             >
-              <Icon className="w-5 h-5" />
+              <div className="w-5 h-5 flex items-center justify-center text-[#0076D0]">
+                <Icon className="w-5 h-5" />
+              </div>
               <span>{label}</span>
             </NavLink>
           ))}
