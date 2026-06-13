@@ -4,6 +4,7 @@ import useAuthStore from '../../store/authStore'
 import { useRole } from '../../lib/roles'
 import api from '../../lib/api'
 import E from '../../lib/endpoints'
+import logo from '../../assets/logo.png' 
 
 const NAV = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -30,10 +31,9 @@ export default function Sidebar({ open, onClose }) {
     <>
       {open && <div className="md:hidden fixed inset-0 bg-black/40 z-30" onClick={onClose} />}
       <aside className={`fixed left-0 top-0 h-screen w-[240px] bg-white border-r border-gray-200 z-40 flex flex-col transition-transform ${open ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-        <div className="py-5 px-6 border-b border-gray-100">
-          <div className="font-bold text-[#0076D0]">Akses Learning</div>
-          <div className="text-xs text-gray-400">the way become expert</div>
-        </div>
+      <div className="py-3 px-6 border-b border-gray-100">
+        <img src={logo} alt="Akses Learning" className="h-20 w-auto" />
+      </div>
         <nav className="px-3 py-4 flex-1 overflow-y-auto">
           {nav.map(({ to, label, icon: Icon }) => (
             <NavLink
@@ -53,8 +53,8 @@ export default function Sidebar({ open, onClose }) {
             </NavLink>
           ))}
         </nav>
-        <button onClick={handleLogout} className="m-3 flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-[#0076D0] hover:bg-[#EFF6FF]">
-          <div className="w-5 h-5 flex items-center justify-center text-[#0076D0]">
+        <button onClick={handleLogout} className="m-3 flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-[#ca0a0aaa] hover:bg-[#ca0a0a55]">
+          <div className="w-5 h-5 flex items-center justify-center text-[#ca0a0aaa]">
             <LogOut className="w-5 h-5" />
           </div>
           Keluar

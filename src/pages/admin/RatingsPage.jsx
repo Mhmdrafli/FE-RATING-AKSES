@@ -94,10 +94,10 @@ export default function RatingsPage() {
         <>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <MetricCard label="Total" value={summary.total_ratings ?? 0} icon={Star} color="blue" />
-            <MetricCard label="Tutor" value={(summary.avg_teacher ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="yellow" />
-            <MetricCard label="Ruangan" value={(summary.avg_room ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="teal" />
-            <MetricCard label="Staf" value={(summary.avg_staff ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="green" />
-            <MetricCard label="Platform" value={(summary.avg_platform ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="purple" />
+            <MetricCard label="Tutor" value={(summary.avg_teacher_score ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="blue" />
+            <MetricCard label="Ruangan" value={(summary.avg_room_score ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="blue" />
+            <MetricCard label="Staf" value={(summary.avg_staff_score ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="blue" />
+            <MetricCard label="Platform" value={(summary.avg_platform_score ?? 0).toFixed?.(1) || '0.0'} icon={Star} color="blue" />
           </div>
 
           <div className="bg-white rounded-xl border border-gray-100 p-5">
@@ -120,10 +120,18 @@ export default function RatingsPage() {
               { key: 'no', label: 'No', render: (_, i) => i + 1 + (page - 1) * 15 },
               { key: 'name', label: 'Nama', render: (r) => r.name || 'Anonim' },
               { key: 'session', label: 'Sesi', render: (r) => r.session?.name || '-' },
-              { key: 'teacher_score', label: 'Tutor', render: (r) => Number(r.teacher_score).toFixed(1) },
-              { key: 'room_score', label: 'Ruangan', render: (r) => Number(r.room_score).toFixed(1) },
-              { key: 'staff_score', label: 'Staf', render: (r) => Number(r.staff_score).toFixed(1) },
-              { key: 'platform_score', label: 'Platform', render: (r) => Number(r.platform_score).toFixed(1) },
+              { key: 'teacher_score', label: 'Tutor', render: (r) => 
+  r.answers?.teacher_score ? Number(r.answers.teacher_score).toFixed(1) : '-' 
+},
+{ key: 'room_score', label: 'Ruangan', render: (r) => 
+  r.answers?.room_score ? Number(r.answers.room_score).toFixed(1) : '-' 
+},
+{ key: 'staff_score', label: 'Staf', render: (r) => 
+  r.answers?.staff_score ? Number(r.answers.staff_score).toFixed(1) : '-' 
+},
+{ key: 'platform_score', label: 'Platform', render: (r) => 
+  r.answers?.platform_score ? Number(r.answers.platform_score).toFixed(1) : '-' 
+},
               { key: 'overall_score', label: 'Overall', render: (r) => (
                 <div className="flex">
                   {[1,2,3,4,5].map(i => (

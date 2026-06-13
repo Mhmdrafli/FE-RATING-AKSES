@@ -47,7 +47,20 @@ export default function RatingFormPage() {
     }
     setSubmitting(true)
     try {
-      await api.post(E.SUBMIT_RATING(slug_token), data)
+      const criteria = session?.criteria || []
+      const answers = {}
+      criteria.forEach((c) => {
+        if (data[c.key] !== undefined) {
+          answers[c.id] = data[c.key]
+        }
+      })
+
+      await api.post(E.SUBMIT_RATING(slug_token), {
+        name: data.name,
+        overall_score: data.overall_score,
+        notes: data.notes,
+        answers,
+      })
       navigate(`/rating/${slug_token}/done`)
     } catch (e) {
       toast.add(getErrorMessage(e), 'error')

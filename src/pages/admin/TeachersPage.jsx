@@ -26,7 +26,7 @@ export default function TeachersPage() {
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">{(r.full_name||'?').charAt(0)}</div>
         )},
         { key: 'full_name', label: 'Nama Lengkap' },
-        { key: 'branch', label: 'Cabang', render: (r) => r.branch?.name || '-' },
+        { key: 'branches', label: 'Cabang', render: (r) => r.branches_name || '-' },
       ]}
       renderForm={({ register, errors, setValue, serverErrors }) => (
         <>

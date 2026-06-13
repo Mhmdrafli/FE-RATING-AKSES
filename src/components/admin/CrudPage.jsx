@@ -19,6 +19,7 @@ export default function CrudPage({
   buildPayload, // optional (formData) => payload
   extraParams = {}, // appended to list query
   injectPayload, // optional object merged into payload before submit
+  transformEdit,
 }) {
   const toast = useToastStore()
   const [items, setItems] = useState([])
@@ -58,7 +59,8 @@ export default function CrudPage({
   }
   const openEdit = (row) => {
     setEditItem(row); setServerErrors({})
-    reset({ ...defaultValues, ...row })
+    const transformed = transformEdit ? transformEdit(row) : row  // ← ubah ini
+    reset({ ...defaultValues, ...transformed })
     setModalOpen(true)
   }
 

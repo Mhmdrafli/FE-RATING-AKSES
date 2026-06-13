@@ -8,7 +8,19 @@ import { QrCode, Copy } from 'lucide-react'
 import { useRole } from '../../lib/roles'
 
 const STATUS = { active: { label: 'Aktif', color: 'green' }, completed: { label: 'Selesai', color: 'gray' }, cancelled: { label: 'Dibatalkan', color: 'red' } }
-
+const toWibString = (localStr) => {
+  if (!localStr) return ''
+  const result = localStr.replace('T', ' ') + ':00'
+  return result
+}
+const formatWib = (str) => {
+  if (!str) return '-'
+  const normalized = str.replace('T', ' ')
+  const [date, time] = normalized.split(' ')
+  if (!date || !time) return str
+  const [y, m, d] = date.split('-')
+  return `${parseInt(d)}/${parseInt(m)}/${y}, ${time.slice(0, 5)}`
+}
 export default function SessionsPage() {
   const navigate = useNavigate()
   const toast = useToastStore()
@@ -34,13 +46,21 @@ export default function SessionsPage() {
       itemEndpoint={E.SESSION}
       extraParams={scope}
       defaultValues={{ class_id: '', teacher_id: '', room_id: '', name: '', start_time: '', end_time: '', status: 'active' }}
+buildPayload={(form) => {
+  return {
+    ...form,
+    start_time: toWibString(form.start_time),
+    end_time: toWibString(form.end_time),
+  }
+}}
       columns={[
         { key: 'no', label: 'No', render: (_, i) => i + 1 },
         { key: 'name', label: 'Nama Sesi' },
         { key: 'class', label: 'Kelas', render: (r) => r.class?.name || '-' },
         { key: 'teacher', label: 'Guru', render: (r) => r.teacher?.full_name || '-' },
         { key: 'room', label: 'Ruangan', render: (r) => r.room?.name || '-' },
-        { key: 'start_time', label: 'Waktu Mulai', render: (r) => r.start_time ? new Date(r.start_time).toLocaleString('id-ID') : '-' },
+        { key: 'start_time', label: 'Waktu Mulai', render: (r) => formatWib(r.start_time) },
+        { key: 'end_time', label: 'Waktu Selesai', render: (r) => formatWib(r.end_time) },
         { key: 'status', label: 'Status', render: (r) => {
           const s = STATUS[r.status] || { label: r.status, color: 'gray' }
           return <Badge label={s.label} color={s.color} />

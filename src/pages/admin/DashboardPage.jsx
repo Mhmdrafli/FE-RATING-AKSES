@@ -1,4 +1,5 @@
-import { useGet } from '../../hooks/useApi'
+import { useState, useEffect } from 'react'
+import api from '../../lib/api'
 import E from '../../lib/endpoints'
 import MetricCard from '../../components/admin/MetricCard'
 import Spinner from '../../components/ui/Spinner'
@@ -7,9 +8,30 @@ import { CalendarDays, Star, TrendingUp, Building2 } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 
 export default function DashboardPage() {
-  const { data, loading, error } = useGet(E.DASHBOARD)
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  const fetchDashboard = async () => {
+    try {
+      const res = await api.get(E.DASHBOARD)
+      setData(res.data)
+    } catch (e) {
+      setError('Gagal memuat data dashboard')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchDashboard()
+    const interval = setInterval(fetchDashboard, 30000) // auto reload tiap 30 detik
+    return () => clearInterval(interval)
+  }, [])
+
   if (loading) return <Spinner />
   if (error) return <div className="text-red-500">{error}</div>
+
   const d = data?.data || {}
   const chart = d.chart_data || []
   const recent = d.recent_ratings || []
@@ -18,9 +40,9 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <MetricCard label="Total Sesi" value={d.total_sessions ?? 0} icon={CalendarDays} color="blue" />
-        <MetricCard label="Total Rating" value={d.total_ratings ?? 0} icon={Star} color="yellow" />
-        <MetricCard label="Rata-rata Skor" value={(d.average_score ?? 0).toFixed ? d.average_score.toFixed(1) : d.average_score} icon={TrendingUp} color="green" />
-        <MetricCard label="Cabang Aktif" value={d.active_branches ?? 0} icon={Building2} color="teal" />
+        <MetricCard label="Total Rating" value={d.total_ratings ?? 0} icon={Star} color="blue" />
+        <MetricCard label="Rata-rata Skor" value={(d.average_score ?? 0).toFixed ? d.average_score.toFixed(1) : d.average_score} icon={TrendingUp} color="blue" />
+        <MetricCard label="Cabang Aktif" value={d.active_branches ?? 0} icon={Building2} color="blue" />
       </div>
 
       <div className="bg-white rounded-xl border border-gray-100 p-5">
