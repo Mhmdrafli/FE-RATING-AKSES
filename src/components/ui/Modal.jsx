@@ -14,7 +14,7 @@ export default function Modal({ open, onClose, title, children, footer }) {
       <div className="bg-white rounded-2xl w-full max-w-[520px] shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <h3 className="font-semibold text-lg text-gray-900">{title}</h3>
-          <button onClick={onClose} className="text-[#0076D0] hover:text-[#005FA3]">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X className="w-5 h-5" />
           </button>
         </div>

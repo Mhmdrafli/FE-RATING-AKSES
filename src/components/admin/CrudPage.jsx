@@ -113,7 +113,7 @@ export default function CrudPage({
     <div className="space-y-4">
       <div className="flex flex-wrap gap-3 items-center justify-between">
         <div className="relative flex-1 max-w-xs">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#0076D0]" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1) }}
@@ -136,7 +136,7 @@ export default function CrudPage({
             <button onClick={() => openEdit(row)} className="p-1.5 rounded border border-blue-200 text-[#0076D0] hover:bg-blue-50">
               <Pencil className="w-4 h-4" />
             </button>
-            <button onClick={() => setDeleteId(row.id)} className="p-1.5 rounded border border-blue-200 text-[#0076D0] hover:bg-blue-50">
+            <button onClick={() => setDeleteId(row.id)} className="p-1.5 rounded border border-red-200 text-red-600 hover:bg-red-50">
               <Trash2 className="w-4 h-4" />
             </button>
           </>

@@ -1,9 +1,9 @@
 const COLORS = {
   blue: 'bg-[#EFF6FF] text-[#0076D0]',
-  green: 'bg-[#EFF6FF] text-[#0076D0]',
-  yellow: 'bg-[#EFF6FF] text-[#0076D0]',
-  purple: 'bg-[#EFF6FF] text-[#0076D0]',
-  teal: 'bg-[#EFF6FF] text-[#0076D0]',
+  green: 'bg-[#ECFDF5] text-[#10B981]',
+  yellow: 'bg-[#FEF3C7] text-[#F59E0B]',
+  purple: 'bg-[#F3E8FF] text-[#8B5CF6]',
+  teal: 'bg-[#CCFBF1] text-[#14B8A6]',
 }
 export default function MetricCard({ label, value, icon: Icon, color = 'blue' }) {
   return (

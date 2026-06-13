@@ -2,8 +2,8 @@ import useToastStore from '../../store/toastStore'
 import { CheckCircle2, XCircle, Info, X } from 'lucide-react'
 
 const ICONS = { success: CheckCircle2, error: XCircle, info: Info }
-const BORDERS = { success: '#0076D0', error: '#0076D0', info: '#0076D0' }
-const COLORS = { success: 'text-[#0076D0]', error: 'text-[#0076D0]', info: 'text-[#0076D0]' }
+const BORDERS = { success: '#10B981', error: '#EF4444', info: '#3B82F6' }
+const COLORS = { success: 'text-green-500', error: 'text-red-500', info: 'text-blue-500' }
 
 export default function Toast() {
   const { toasts, remove } = useToastStore()
@@ -15,11 +15,11 @@ export default function Toast() {
           <div
             key={t.id}
             className="bg-white rounded-[10px] shadow-lg px-4 py-3 flex items-center gap-3 border-l-4 animate-[slideIn_0.25s_ease-out]"
-            style={{ borderLeftColor: BORDERS[t.type] || '#0076D0' }}
+            style={{ borderLeftColor: BORDERS[t.type] || '#3B82F6' }}
           >
             <Icon className={`w-5 h-5 ${COLORS[t.type] || 'text-blue-500'}`} />
             <span className="text-sm text-gray-800 flex-1">{t.message}</span>
-            <button onClick={() => remove(t.id)} className="text-[#0076D0] hover:text-[#005FA3]">
+            <button onClick={() => remove(t.id)} className="text-gray-400 hover:text-gray-600">
               <X className="w-4 h-4" />
             </button>
           </div>
