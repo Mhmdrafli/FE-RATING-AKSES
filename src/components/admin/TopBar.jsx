@@ -17,7 +17,7 @@ export default function TopBar({ onMenuClick }) {
   return (
     <div className="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between sticky top-0 z-20">
       <div className="flex items-center gap-3">
-        <button className="md:hidden" onClick={onMenuClick}><Menu className="w-6 h-6" /></button>
+        <button className="md:hidden text-[#0076D0]" onClick={onMenuClick}><Menu className="w-6 h-6" /></button>
         <h1 className="font-bold text-lg text-gray-900">{title}</h1>
       </div>
       <div className="flex items-center gap-3">

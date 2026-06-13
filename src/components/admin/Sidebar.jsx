@@ -46,13 +46,18 @@ export default function Sidebar({ open, onClose }) {
                 }`
               }
             >
-              <Icon className="w-5 h-5" />
+              <div className="w-5 h-5 flex items-center justify-center text-[#0076D0]">
+                <Icon className="w-5 h-5" />
+              </div>
               <span>{label}</span>
             </NavLink>
           ))}
         </nav>
-        <button onClick={handleLogout} className="m-3 flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-red-500 hover:bg-red-50">
-          <LogOut className="w-5 h-5" /> Keluar
+        <button onClick={handleLogout} className="m-3 flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-[#0076D0] hover:bg-[#EFF6FF]">
+          <div className="w-5 h-5 flex items-center justify-center text-[#0076D0]">
+            <LogOut className="w-5 h-5" />
+          </div>
+          Keluar
         </button>
       </aside>
     </>
