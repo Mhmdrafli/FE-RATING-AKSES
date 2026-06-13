@@ -21,7 +21,7 @@ export default function SessionQRPage() {
 
   return (
     <div className="max-w-[480px] mx-auto">
-      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[#0076D0] mb-4 text-sm hover:text-[#005FA3]">
+      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-600 mb-4 text-sm hover:text-gray-900">
         <ArrowLeft className="w-4 h-4" /> Kembali
       </button>
       <div className="bg-white rounded-2xl border border-gray-100 p-8 print:border-none print:shadow-none">
@@ -43,7 +43,7 @@ export default function SessionQRPage() {
         <p className="text-xs text-gray-400 text-center break-all mb-6 select-all">{url}</p>
 
         <div className="flex gap-2 print:hidden">
-          <button onClick={copy} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-blue-200 text-[#0076D0] hover:bg-blue-50 text-sm">
+          <button onClick={copy} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm">
             <Copy className="w-4 h-4" /> Salin Link
           </button>
           <button onClick={() => window.print()} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-[#0076D0] text-white hover:bg-[#005FA3] text-sm font-semibold">

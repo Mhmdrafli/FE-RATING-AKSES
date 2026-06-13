@@ -51,7 +51,7 @@ export default function SessionsPage() {
           <button onClick={() => navigate(`/admin/sessions/${row.id}/qr`)} className="p-1.5 rounded border border-blue-200 text-[#0076D0] hover:bg-blue-50" title="QR Code">
             <QrCode className="w-4 h-4" />
           </button>
-          <button onClick={() => copyLink(row.slug_token)} className="p-1.5 rounded border border-blue-200 text-[#0076D0] hover:bg-blue-50" title="Salin Link">
+          <button onClick={() => copyLink(row.slug_token)} className="p-1.5 rounded border border-gray-200 text-gray-600 hover:bg-gray-50" title="Salin Link">
             <Copy className="w-4 h-4" />
           </button>
         </>
