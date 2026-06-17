@@ -149,14 +149,6 @@ export default function LoginPage() {
             className="cursor-pointer rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 hover:bg-blue-100 transition-colors"
           >
             <p className="mb-2 text-xs font-semibold text-blue-500">Akun Demo — Klik untuk auto-fill</p>
-            <div className="flex justify-between">
-              <span className="text-xs text-gray-500">Email</span>
-              <span className="text-xs font-medium text-gray-800">superadmin@akseslearning.id</span>
-            </div>
-            <div className="mt-1 flex justify-between">
-              <span className="text-xs text-gray-500">Password</span>
-              <span className="text-xs font-medium text-gray-800">password123</span>
-            </div>
           </div>
 
           <button
