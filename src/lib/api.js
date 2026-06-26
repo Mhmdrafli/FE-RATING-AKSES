@@ -12,12 +12,15 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+let isRedirecting = false
+
 api.interceptors.response.use(
   (r) => r,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('admin_token')
-      if (!window.location.pathname.startsWith('/admin/login')) {
+      if (!window.location.pathname.startsWith('/admin/login') && !isRedirecting) {
+        isRedirecting = true
         window.location.href = '/admin/login'
       }
     }

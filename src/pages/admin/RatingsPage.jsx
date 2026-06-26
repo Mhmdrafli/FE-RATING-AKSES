@@ -120,8 +120,8 @@ export default function RatingsPage() {
               { key: 'no', label: 'No', render: (_, i) => i + 1 + (page - 1) * 15 },
               { key: 'name', label: 'Nama', render: (r) => r.name || 'Anonim' },
               { key: 'session', label: 'Sesi', render: (r) => r.session?.name || '-' },
-              { key: 'class_vote', label: 'Kelas', render: (r) => r.class_vote
-                ? <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">{r.class_vote}</span>
+              { key: 'class', label: 'Kelas', render: (r) => r.class
+                ? <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">{r.class}</span>
                 : <span className="text-gray-400 text-xs">-</span>
               },
               { key: 'teacher_score', label: 'Tutor', render: (r) => 
