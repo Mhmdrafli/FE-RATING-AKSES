@@ -34,6 +34,11 @@ export default function RatingFormPage() {
     api.get(E.SESSION_BY_TOKEN(slug_token))
     .then((res) => {
       const s = res.data?.data || res.data
+      // cek localStorage dulu
+      if (localStorage.getItem(`voted_${slug_token}`) === 'yes') {
+        navigate(`/rating/${slug_token}/done`)
+        return
+      }
       if (!s || s.status !== 'active') {
         setErr('Sesi ini tidak tersedia atau sudah tidak aktif.')
       } else if (s.already_voted) {
@@ -67,6 +72,7 @@ export default function RatingFormPage() {
         notes: data.notes,
         answers,
       })
+      localStorage.setItem(`voted_${slug_token}`, 'yes')
       navigate(`/rating/${slug_token}/done`)
     } catch (e) {
       toast.add(getErrorMessage(e), 'error')
