@@ -75,6 +75,13 @@ export default function RatingsPage() {
           </select>
         </div>
         <div>
+          <select name="class_vote">
+            <option value="">-- Pilih Kelas (opsional) --</option>
+            <option value="TIU 8 - FIGURAL">TIU 8 - FIGURAL</option>
+            <option value="TWK 3">TWK 3</option>
+          </select>
+        </div>
+        <div>
           <label className="block text-xs text-gray-500 mb-1">Dari</label>
           <input type="date" className={inputCls} value={filters.date_from} onChange={(e) => onFilter('date_from', e.target.value)} />
         </div>
