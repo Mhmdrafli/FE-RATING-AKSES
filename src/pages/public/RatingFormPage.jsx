@@ -21,6 +21,7 @@ export default function RatingFormPage() {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+  const [topReviews, setTopReviews] = useState([])
 
   const { register, handleSubmit, control, watch, setValue } = useForm({
     defaultValues: {
@@ -31,12 +32,17 @@ export default function RatingFormPage() {
 
   useEffect(() => {
     api.get(E.SESSION_BY_TOKEN(slug_token))
-      .then((res) => {
-        const s = res.data?.data || res.data
-        if (!s || s.status !== 'active') {
-          setErr('Sesi ini tidak tersedia atau sudah tidak aktif.')
-        } else setSession(s)
-      })
+    .then((res) => {
+      const s = res.data?.data || res.data
+      if (!s || s.status !== 'active') {
+        setErr('Sesi ini tidak tersedia atau sudah tidak aktif.')
+      } else if (s.already_voted) {
+        navigate(`/rating/${slug_token}/done`)
+      } else {
+        setSession(s)
+        if (s.top_reviews?.length) setTopReviews(s.top_reviews)
+      }
+    })
       .catch(() => setErr('Sesi ini tidak tersedia atau sudah tidak aktif.'))
       .finally(() => setLoading(false))
   }, [slug_token])
@@ -109,20 +115,28 @@ export default function RatingFormPage() {
                 <span className="text-6xl text-[#0076D0] font-bold">{teacherName.charAt(0)}</span>
               )}
             </div>
-            <div className="hidden md:flex absolute -left-4 top-6 bg-white rounded-xl shadow-lg p-3 items-center gap-2 max-w-[220px]">
-              <div className="flex">{[1,2,3,4,5].map(i=><Star key={i} className="w-3 h-3" fill="#FACC15" stroke="#FACC15"/>)}</div>
-              <div className="text-xs">
-                <div className="font-semibold">Pengajar Luar Biasa</div>
-                <div className="text-gray-400">Materi mudah dipahami</div>
+            {topReviews[0] && (
+              <div className="hidden md:flex absolute -left-4 top-6 bg-white rounded-xl shadow-lg p-3 items-center gap-2 max-w-[220px]">
+                <div className="flex">
+                  {[1,2,3,4,5].map(i=><Star key={i} className="w-3 h-3" fill={i <= topReviews[0].overall_score ? '#FACC15' : 'none'} stroke={i <= topReviews[0].overall_score ? '#FACC15' : '#D1D5DB'}/>)}
+                </div>
+                <div className="text-xs">
+                  <div className="font-semibold">{topReviews[0].name || 'Anonim'}</div>
+                  <div className="text-gray-400 line-clamp-1">{topReviews[0].notes || 'Pengalaman luar biasa!'}</div>
+                </div>
               </div>
-            </div>
-            <div className="hidden md:flex absolute -right-4 bottom-6 bg-white rounded-xl shadow-lg p-3 items-center gap-2 max-w-[220px]">
-              <div className="flex">{[1,2,3,4].map(i=><Star key={i} className="w-3 h-3" fill="#FACC15" stroke="#FACC15"/>)}</div>
-              <div className="text-xs">
-                <div className="font-semibold">Sesi Seru!</div>
-                <div className="text-gray-400">Interaktif & jelas</div>
+            )}
+            {topReviews[1] && (
+              <div className="hidden md:flex absolute -right-4 bottom-6 bg-white rounded-xl shadow-lg p-3 items-center gap-2 max-w-[220px]">
+                <div className="flex">
+                  {[1,2,3,4,5].map(i=><Star key={i} className="w-3 h-3" fill={i <= topReviews[1].overall_score ? '#FACC15' : 'none'} stroke={i <= topReviews[1].overall_score ? '#FACC15' : '#D1D5DB'}/>)}
+                </div>
+                <div className="text-xs">
+                  <div className="font-semibold">{topReviews[1].name || 'Anonim'}</div>
+                  <div className="text-gray-400 line-clamp-1">{topReviews[1].notes || 'Sesi yang seru!'}</div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>

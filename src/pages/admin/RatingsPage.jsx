@@ -75,13 +75,6 @@ export default function RatingsPage() {
           </select>
         </div>
         <div>
-          <select name="class_vote">
-            <option value="">-- Pilih Kelas (opsional) --</option>
-            <option value="TIU 8 - FIGURAL">TIU 8 - FIGURAL</option>
-            <option value="TWK 3">TWK 3</option>
-          </select>
-        </div>
-        <div>
           <label className="block text-xs text-gray-500 mb-1">Dari</label>
           <input type="date" className={inputCls} value={filters.date_from} onChange={(e) => onFilter('date_from', e.target.value)} />
         </div>
@@ -127,6 +120,10 @@ export default function RatingsPage() {
               { key: 'no', label: 'No', render: (_, i) => i + 1 + (page - 1) * 15 },
               { key: 'name', label: 'Nama', render: (r) => r.name || 'Anonim' },
               { key: 'session', label: 'Sesi', render: (r) => r.session?.name || '-' },
+              { key: 'class_vote', label: 'Kelas', render: (r) => r.class_vote
+                ? <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">{r.class_vote}</span>
+                : <span className="text-gray-400 text-xs">-</span>
+              },
               { key: 'teacher_score', label: 'Tutor', render: (r) => 
   r.answers?.teacher_score ? Number(r.answers.teacher_score).toFixed(1) : '-' 
 },
