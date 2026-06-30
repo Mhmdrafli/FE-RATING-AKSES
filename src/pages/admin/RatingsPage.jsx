@@ -85,7 +85,7 @@ export default function RatingsPage() {
         <div className="flex gap-2">
           <button onClick={reset} className="flex-1 py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-50">Reset</button>
           <button onClick={exportCsv} className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg bg-[#00A99D] text-white text-sm font-semibold hover:opacity-90">
-            <Download className="w-4 h-4" /> CSV
+            <Download className="w-4 h-4" /> XLSX
           </button>
         </div>
       </div>
