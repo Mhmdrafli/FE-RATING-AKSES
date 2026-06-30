@@ -50,7 +50,7 @@ export default function RatingsPage() {
       const res = await api.get(E.RATINGS_EXPORT, { params: filters, responseType: 'blob' })
       const url = window.URL.createObjectURL(new Blob([res.data]))
       const link = document.createElement('a')
-      link.href = url; link.download = 'ratings.csv'
+      link.href = url; link.download = 'laporan_rating.xlsx'
       document.body.appendChild(link); link.click(); link.remove()
     } catch (e) { toast.add('Gagal mengunduh CSV', 'error') }
   }
@@ -124,18 +124,22 @@ export default function RatingsPage() {
                 ? <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">{r.class}</span>
                 : <span className="text-gray-400 text-xs">-</span>
               },
+              { key: 'teacher', label: 'Guru', render: (r) => r.teacher
+                ? <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">{r.teacher}</span>
+                : <span className="text-gray-400 text-xs">-</span>
+              },
               { key: 'teacher_score', label: 'Tutor', render: (r) => 
-  r.answers?.teacher_score ? Number(r.answers.teacher_score).toFixed(1) : '-' 
-},
-{ key: 'room_score', label: 'Ruangan', render: (r) => 
-  r.answers?.room_score ? Number(r.answers.room_score).toFixed(1) : '-' 
-},
-{ key: 'staff_score', label: 'Staf', render: (r) => 
-  r.answers?.staff_score ? Number(r.answers.staff_score).toFixed(1) : '-' 
-},
-{ key: 'platform_score', label: 'Platform', render: (r) => 
-  r.answers?.platform_score ? Number(r.answers.platform_score).toFixed(1) : '-' 
-},
+                r.answers?.teacher_score ? Number(r.answers.teacher_score).toFixed(1) : '-' 
+              },
+              { key: 'room_score', label: 'Ruangan', render: (r) => 
+                r.answers?.room_score ? Number(r.answers.room_score).toFixed(1) : '-' 
+              },
+              { key: 'staff_score', label: 'Staf', render: (r) => 
+                r.answers?.staff_score ? Number(r.answers.staff_score).toFixed(1) : '-' 
+              },
+              { key: 'platform_score', label: 'Platform', render: (r) => 
+                r.answers?.platform_score ? Number(r.answers.platform_score).toFixed(1) : '-' 
+              },
               { key: 'overall_score', label: 'Overall', render: (r) => (
                 <div className="flex">
                   {[1,2,3,4,5].map(i => (
